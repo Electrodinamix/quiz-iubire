@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz-ul nostru ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg,#ff4d6d,#ff8fab);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.15);
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,.3);
+            backdrop-filter: blur(6px);
+            position: relative;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: white;
+            color: #ff4d6d;
+            transition: .2s;
+        }
+
+            button:hover {
+                transform: scale(1.03);
+                background: #ffe0e8;
+            }
+
+        .hidden {
+            display: none;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            animation: float 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(110vh);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        /* scor colț */
+        #score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* glow efect pentru ultima varianta */
+        .glow {
+            animation: glowEffect 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowEffect {
+            from {
+                box-shadow: 0 0 10px #ffeb3b;
+            }
+
+            to {
+                box-shadow: 0 0 25px #ffff00;
+            }
+        }
+
+        /* animație mesaj sub scor */
+        #score-message {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 14px;
+            margin-top: 5px;
+            color: #fff;
+        }
+
+            #score-message.show {
+                opacity: 1;
+            }
+
+        /* linie de tăiere peste variantele greșite */
+        .strikethrough {
+            position: relative;
+            display: inline-block;
+        }
+
+            .strikethrough::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 100%;
+                height: 3px;
+                background: red;
+                transform: translateY(-50%);
+            }
+    </style>
+</head>
+
+<body>
+
+    <div id="score">
+        Scor: 0<br>
+        <div id="score-message">Femeia mea are mereu dreptate ❤️</div>
+    </div>
+
+    <div class="container" id="quiz">
+        <h2>Quiz-ul nostru ❤️</h2>
+        <div id="question"></div>
+        <div id="answers"></div>
+        <div id="animated-text" style="font-size:20px;color:#ffeb3b;margin-top:20px;"></div>
+    </div>
+
+    <div class="container hidden" id="final">
+        <h2>Ai terminat quiz-ul! 🥰</h2>
+        <p style="font-size:18px;">
+            ❤️ Te iubesc enorm de muult ❤️
+        </p>
+        <button id="finalize-btn">✅ Finalizează quiz-ul</button>
+    </div>
+
+    <script>
+        // întrebări
+        const quiz = [
+            { q: "Cu ce subiect te-am cucerit în prima zi?", options: ["Horror", "Comedie", "Sport"] },
+            { q: "Ce mi-ai cerut să fac la ora 20:00 când am împlinit prima lună împreună?", options: ["Un mesaj foarte frumos", "Să trimit un video cu mine", "Să trimit o poză cu mine"] },
+            { q: "Care a fost primul joc jucat împreună în prima lună?", options: ["Adevăr și provocare", "Fazan", "Roblox"] },
+            { q: "Ce am început să facem din august mai des?", options: ["Să ne uităm la filme", "Să ne jucăm jocuri", "Să ne jucăm Fazan"] },
+            { q: "Când ai postat primul story pe Instagram despre noi?", options: ["19 August", "14 August", "13 August"] },
+            { q: "Când ne-am cunoscut prima dată pe apel?", options: ["Octombrie", "August", "Noiembrie"] },
+            { q: "Care este cel mai important lucru din viața mea?", options: ["Fericire", "Împlinire", "Preda Ariana Andreea (viitoarea mea soție)"] }
+        ];
+
+        let index = 0;
+        let score = 0;
+
+        function showQuestion() {
+            if (index >= quiz.length) {
+                document.getElementById("quiz").classList.add("hidden");
+                document.getElementById("final").classList.remove("hidden");
+                return;
+            }
+
+            const question = quiz[index];
+            const questionDiv = document.getElementById("question");
+            const answersDiv = document.getElementById("answers");
+            const animatedDiv = document.getElementById("animated-text");
+            const scoreMessage = document.getElementById("score-message");
+
+            questionDiv.innerHTML = `<h3>${question.q}</h3>`;
+            answersDiv.innerHTML = "";
+            animatedDiv.innerHTML = "";
+            scoreMessage.classList.remove("show");
+
+            question.options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.textContent = opt;
+
+                if (index === quiz.length - 1 && opt !== "Preda Ariana Andreea (viitoarea mea soție)") {
+                    btn.classList.add("strikethrough");
+                }
+
+                btn.onclick = () => {
+                    score += 5;
+
+                    const scoreDiv = document.getElementById("score");
+                    scoreDiv.innerHTML = `Scor: ${score}<br>
+                    <div id="score-message">Femeia mea are mereu dreptate ❤️</div>`;
+
+                    const sm = document.getElementById("score-message");
+                    sm.classList.add("show");
+                    setTimeout(() => {
+                        sm.classList.remove("show");
+                    }, 12000);
+
+                    if (index === quiz.length - 1) {
+                        Array.from(answersDiv.children).forEach(b => {
+                            if (b.textContent !== "Preda Ariana Andreea (viitoarea mea soție)") {
+                                b.remove();
+                            } else {
+                                b.classList.add("glow");
+                            }
+                        });
+                        generateAnimatedText();
+                    } else {
+                        index++;
+                        showQuestion();
+                    }
+                };
+
+                answersDiv.appendChild(btn);
+            });
+        }
+
+        // inimioare animate
+        function hearts() {
+            for (let i = 0; i < 8; i++) {
+                const h = document.createElement("div");
+                h.className = "heart";
+                h.innerHTML = "❤️";
+                h.style.left = Math.random() * 100 + "vw";
+                h.style.animationDuration = 4 + Math.random() * 4 + "s";
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 8000);
+            }
+        }
+
+        setInterval(hearts, 2500);
+
+        // animatie text la ultima intrebare
+        function generateAnimatedText() {
+            const textDiv = document.getElementById("animated-text");
+            const words = ["Fericire", "Împlinire"];
+            let i = 0;
+
+            setInterval(() => {
+                const span = document.createElement("span");
+                span.textContent = "= " + words[i] + ", ";
+                span.style.fontWeight = "bold";
+                span.style.color = "#ffeb3b";
+                span.style.fontSize = "22px";
+                textDiv.appendChild(span);
+                i = (i + 1) % words.length;
+            }, 800);
+        }
+
+        // finalizează quiz și setează notificare peste 5 minute
+        document.getElementById("finalize-btn").onclick = () => {
+            setTimeout(() => {
+                sendNotification();
+            }, 300000);
+
+            alert("🎉 Quiz-ul a fost finalizat! În 5 minute vei primi o surpriză pe telefon ❤️");
+        };
+
+        // notificare
+        function sendNotification() {
+            if ("Notification" in window) {
+                if (Notification.permission === "granted") {
+                    new Notification("💌 Surpriză!", {
+                        body: "Te iubesc enorm de muult ❤️"
+                    });
+                } else {
+                    Notification.requestPermission().then(p => {
+                        if (p === "granted") {
+                            new Notification("💌 Surpriză!", {
+                                body: "Te iubesc enorm de muult ❤️"
+                            });
+                        } else {
+                            alert("Te iubesc enorm de muult ❤️");
+                        }
+                    });
+                }
+            } else {
+                alert("Te iubesc enorm de muult ❤️");
+            }
+        }
+
+        showQuestion();
+    </script>
+
+</body>
+</html>

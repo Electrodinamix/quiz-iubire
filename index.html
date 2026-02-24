@@ -7,27 +7,15 @@
  <!-- OneSignal SDK -->
   <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 
-  <script>
-    window.OneSignal = window.OneSignal || [];
-    OneSignal.push(function() {
-      OneSignal.init({
-        appId: "APP_ID_TAU" // pune App ID-ul tău de la OneSignal
-      });
-
-      // Cere permisiunea notificărilor
-      OneSignal.showSlidedownPrompt();
-
-      // Trimite notificarea după 5 minute
-      setTimeout(() => {
-        OneSignal.sendSelfNotification(
-          "💌 Surpriză!",
-          "Te iubesc enorm de muult ❤️",
-          "https://username.github.io/quiz-iubire/", // link site
-          {icon: "https://link-catre-imagine.png"}
-        );
-      }, 300000); // 5 minute
+ <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "c27e0684-17c5-4fc9-ae98-4181596a229b",
     });
-  </script>
+  });
+</script>
 
 
     <style>

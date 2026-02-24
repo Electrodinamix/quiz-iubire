@@ -12,6 +12,17 @@
     });
   });
 </script>
+setTimeout(() => {
+  OneSignal.push(function() {
+    OneSignal.sendSelfNotification(
+      "💌 Surpriză!",
+      "Te iubesc enorm de muult ❤️",
+      "https://username.github.io/quiz-iubire/", // link site
+      {icon: "https://link-catre-imagine.png"}
+    );
+  });
+}, 300000); // 5 minute = 300.000 ms
+    
 
     <style>
         body {

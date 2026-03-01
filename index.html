@@ -277,14 +277,7 @@
             }, 800);
         }
 
-        // finalizează quiz și setează notificare peste 5 minute
-        document.getElementById("finalize-btn").onclick = () => {
-            setTimeout(() => {
-                sendNotification();
-            }, 300000);
-
-            alert("🎉 Quiz-ul a fost finalizat! În 5 minute vei primi o surpriză pe telefon ❤️");
-        };
+        
 
         // notificare
         function sendNotification() {

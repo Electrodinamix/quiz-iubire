@@ -8,12 +8,10 @@
 <!-- OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "c27e0684-17c5-4fc9-ae98-4181596a229b",
-    });
-  });
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({ appId: "c27e0684-17c5-4fc9-ae98-4181596a229b" });
+});
 </script>
 
 <style>
@@ -24,6 +22,7 @@ body {
   color: white;
   min-height: 100vh;
   overflow-x: hidden;
+  touch-action: manipulation;
 }
 
 .container {
@@ -37,11 +36,7 @@ body {
   backdrop-filter: blur(6px);
   animation: enter 0.8s ease;
 }
-
-@keyframes enter {
-  from {opacity:0; transform: translateY(30px);}
-  to {opacity:1; transform: translateY(0);}
-}
+@keyframes enter {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 
 h2 {margin-bottom:20px;}
 button {
@@ -58,13 +53,9 @@ button {
   transition: .2s;
   animation: pulse 2.5s infinite;
 }
-@keyframes pulse {
-  0% {box-shadow:0 0 0 rgba(255,255,255,.4);}
-  50% {box-shadow:0 0 20px rgba(255,255,255,.8);}
-  100% {box-shadow:0 0 0 rgba(255,255,255,.4);}
-}
-button:hover {transform: scale(1.03);}
-.hidden {display: none;}
+@keyframes pulse {0%{box-shadow:0 0 0 rgba(255,255,255,.4);}50%{box-shadow:0 0 20px rgba(255,255,255,.8);}100%{box-shadow:0 0 0 rgba(255,255,255,.4);}}
+button:hover{transform:scale(1.03);}
+.hidden{display:none;}
 
 .heart {
   position: fixed;
@@ -72,10 +63,7 @@ button:hover {transform: scale(1.03);}
   animation: float 6s linear infinite;
   pointer-events: none;
 }
-@keyframes float {
-  from {transform: translateY(110vh); opacity:1;}
-  to {transform: translateY(-10vh); opacity:0;}
-}
+@keyframes float{from{transform:translateY(110vh);opacity:1;}to{transform:translateY(-10vh);opacity:0;}}
 
 #score {
   position: fixed;
@@ -88,70 +76,38 @@ button:hover {transform: scale(1.03);}
   z-index: 1000;
   transition: all 0.3s ease;
 }
-#score.bounce {
-  animation: bounce 0.6s;
-}
-@keyframes bounce {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.2);}
-  100% {transform: scale(1);}
-}
+#score.bounce {animation: bounce 0.6s;}
+@keyframes bounce{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
 
-.glow {
-  animation: glowEffect 1s ease-in-out infinite alternate;
-}
-@keyframes glowEffect {
-  from {box-shadow:0 0 10px #ffeb3b;}
-  to {box-shadow:0 0 25px #ffff00;}
-}
+.glow {animation: glowEffect 1s ease-in-out infinite alternate;}
+@keyframes glowEffect{from{box-shadow:0 0 10px #ffeb3b;}to{box-shadow:0 0 25px #ffff00;}}
 
-.strikethrough {position: relative; display:inline-block;}
-.strikethrough::after {
-  content:"";
-  position:absolute;
-  left:0; top:50%;
-  width:100%; height:3px;
-  background:red;
-  transform: translateY(-50%);
-}
+.strikethrough{position: relative; display:inline-block;}
+.strikethrough::after{content:"";position:absolute;left:0;top:50%;width:100%;height:3px;background:red;transform:translateY(-50%);}
 
-#score-message {
-  opacity:0;
-  transition: opacity 0.3s ease;
-  font-size: 14px;
-  margin-top:5px;
-  color:#fff;
-}
-#score-message.show {opacity:1;}
+#score-message{opacity:0;transition:opacity 0.3s ease;font-size:14px;margin-top:5px;color:#fff;}
+#score-message.show{opacity:1;}
 
 /* RESPONSIVE */
 @media(max-width:600px){
-  body {font-size:18px;}
-  .container {margin:15px; padding:20px;}
-  h2 {font-size:24px;}
-  h3 {font-size:20px;}
-  button {font-size:18px; padding:16px;}
-  #score {font-size:16px;}
-  #animated-text {font-size:18px;}
+  body{font-size:18px;}
+  .container{margin:15px;padding:20px;}
+  h2{font-size:24px;}
+  h3{font-size:20px;}
+  button{font-size:18px;padding:16px;}
+  #score{font-size:16px;}
+  #animated-text{font-size:18px;}
 }
 
 /* ANIMATIE FINAL: DOI PERSOANE */
-.kiss-container {position:relative; height:200px; margin-top:20px;}
-.person{
-  width:50px; height:50px; background:pink; border-radius:50%; position:absolute; top:50%;
-  transform: translateY(-50%);
-}
-.person.left {left:0; animation:left-to-center 3s forwards;}
-.person.right {right:0; animation:right-to-center 3s forwards;}
-.heart-pop {position:absolute; top:40%; left:50%; transform:translate(-50%,-50%); font-size:30px; opacity:0;
-             animation:heart-pop 3s forwards 2s;}
+.kiss-container{position:relative;height:200px;margin-top:20px;}
+.person{width:50px;height:50px;background:pink;border-radius:50%;position:absolute;top:50%;transform:translateY(-50%);}
+.person.left{left:0;animation:left-to-center 3s forwards;}
+.person.right{right:0;animation:right-to-center 3s forwards;}
+.heart-pop{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);font-size:30px;opacity:0;animation:heart-pop 3s forwards 2s;}
 @keyframes left-to-center{to{left:45%;}}
 @keyframes right-to-center{to{right:45%;}}
-@keyframes heart-pop{
-  0%{opacity:0; transform:scale(0);}
-  50%{opacity:1; transform:scale(1.5);}
-  100%{opacity:1; transform:scale(1);}
-}
+@keyframes heart-pop{0%{opacity:0;transform:scale(0);}50%{opacity:1;transform:scale(1.5);}100%{opacity:1;transform:scale(1);}}
 </style>
 </head>
 
@@ -171,27 +127,27 @@ button:hover {transform: scale(1.03);}
 
 <div class="container hidden" id="final">
   <h2>Ai terminat quiz-ul! 🥰</h2>
-  <p style="font-size:18px;">
-    ❤️ Te iubesc enorm de muult ❤️
-  </p>
+  <div id="animated-text-final" style="margin:10px 0;font-size:20px;color:#ffeb3b;"></div>
   <div class="kiss-container">
     <div class="person left"></div>
     <div class="person right"></div>
     <div class="heart-pop">❤️</div>
   </div>
+  <button id="playMusic">🎵 Ascultă muzica noastră arabă 🎵</button>
+  <audio id="arabicSong" src="muzica_araba.mp3"></audio>
   <button id="finalize-btn">✅ Finalizează quiz-ul</button>
 </div>
 
 <script>
 // Quiz
 const quiz=[
-  { q: "Cu ce subiect te-am cucerit în prima zi?", options: ["Horror", "Comedie", "Sport"] },
-  { q: "Ce mi-ai cerut să fac la ora 20:00 când am împlinit prima lună împreună?", options: ["Un mesaj foarte frumos", "Să trimit un video cu mine", "Să trimit o poză cu mine"] },
-  { q: "Care a fost primul joc jucat împreună în prima lună?", options: ["Adevăr și provocare", "Fazan", "Roblox"] },
-  { q: "Ce am început să facem din august mai des?", options: ["Să ne uităm la filme", "Să ne jucăm jocuri", "Să ne jucăm Fazan"] },
-  { q: "Când ai postat primul story pe Instagram despre noi?", options: ["19 August", "14 August", "13 August"] },
-  { q: "Când ne-am cunoscut prima dată pe apel?", options: ["Octombrie", "August", "Noiembrie"] },
-  { q: "Care este cel mai important lucru din viața mea?", options: ["Fericire", "Împlinire", "Preda Ariana Andreea (viitoarea mea soție)"] }
+  { q:"Cu ce subiect te-am cucerit în prima zi?", options:["Horror","Comedie","Sport"] },
+  { q:"Ce mi-ai cerut să fac la ora 20:00 când am împlinit prima lună împreună?", options:["Un mesaj foarte frumos","Să trimit un video cu mine","Să trimit o poză cu mine"] },
+  { q:"Care a fost primul joc jucat împreună în prima lună?", options:["Adevăr și provocare","Fazan","Roblox"] },
+  { q:"Ce am început să facem din august mai des?", options:["Să ne uităm la filme","Să ne jucăm jocuri","Să ne jucăm Fazan"] },
+  { q:"Când ai postat primul story pe Instagram despre noi?", options:["19 August","14 August","13 August"] },
+  { q:"Când ne-am cunoscut prima dată pe apel?", options:["Octombrie","August","Noiembrie"] },
+  { q:"Care este cel mai important lucru din viața mea?", options:["Fericire","Împlinire","Preda Ariana Andreea (viitoarea mea soție)"] }
 ];
 
 let index=0;
@@ -201,6 +157,7 @@ function showQuestion(){
   if(index>=quiz.length){
     document.getElementById("quiz").classList.add("hidden");
     document.getElementById("final").classList.remove("hidden");
+    typeWriter();
     return;
   }
 
@@ -225,7 +182,6 @@ function showQuestion(){
 
     btn.onclick=()=>{
       score+=5;
-
       const scoreDiv=document.getElementById("score");
       scoreDiv.innerHTML=`Scor: ${score}<br><div id="score-message">Femeia mea are mereu dreptate ❤️</div>`;
       const sm=document.getElementById("score-message");
@@ -240,15 +196,10 @@ function showQuestion(){
         Array.from(answersDiv.children).forEach(b=>{
           if(b.textContent!=="Preda Ariana Andreea (viitoarea mea soție)"){
             b.remove();
-          } else {
-            b.classList.add("glow");
-          }
+          } else { b.classList.add("glow"); }
         });
         generateAnimatedText();
-      } else {
-        index++;
-        showQuestion();
-      }
+      } else { index++; showQuestion(); }
     };
     answersDiv.appendChild(btn);
   });
@@ -284,6 +235,26 @@ function generateAnimatedText(){
   },800);
 }
 
+// efect de scriere la final
+const finalMessage="❤️ Te iubesc enorm de muult, Ariana ❤️";
+let i=0;
+function typeWriter(){
+  const el=document.getElementById("animated-text-final");
+  el.innerHTML="";
+  function type(){ 
+    if(i<finalMessage.length){
+      el.innerHTML+=finalMessage.charAt(i);
+      i++; setTimeout(type,100);
+    }
+  }
+  type();
+}
+
+// muzica
+document.getElementById("playMusic").onclick=()=>{
+  document.getElementById("arabicSong").play();
+};
+
 // finalizează quiz și notificare
 document.getElementById("finalize-btn").onclick=()=>{
   setTimeout(()=>{sendNotification();},300000);
@@ -311,4 +282,3 @@ showQuestion();
 
 </body>
 </html>
-
